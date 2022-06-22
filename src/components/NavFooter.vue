@@ -1,10 +1,10 @@
 <template>
-  <div>首页</div>
+  <div>nav-footer</div>
 </template>
 
 <script>
 export default {
-  name: 'ProductHome'
+  name: 'NavFooter'
 }
 </script>
 

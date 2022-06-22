@@ -1,10 +1,10 @@
 <template>
-  <div>首页</div>
+  <div>order-header</div>
 </template>
 
 <script>
 export default {
-  name: 'ProductHome'
+  name: 'OrderHeader'
 }
 </script>
 
