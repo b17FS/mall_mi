@@ -9,12 +9,10 @@ module.exports = defineConfig({
     // 看上去时访问 /api 接口，实际访问的是 'https://www.imooc.com/mock
     proxy: {
       '/api': {
-        target: 'https://www.imooc.com',
-        // 是否跨域
+        target: 'http://mall-pre.springboot.cn',
         changeOrigin: true,
         pathRewrite: {
-          '/api': '/mock'
-          // '/api': ' '
+          '/api': ''
         }
       }
     }
