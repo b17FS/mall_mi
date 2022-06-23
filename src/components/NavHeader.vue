@@ -264,7 +264,7 @@ export default {
             box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
             opacity: 0;
             overflow: hidden;
-            // z-index: 999;
+            z-index: 20;
             transition: all 0.2s;
             ul {
               .product {
