@@ -21,6 +21,7 @@ export default {
 @import '@/assets/scss/mixin.scss';
 
 .servicebar-container {
+  background-color: #fff;
   color: #666;
   font-size: 16px;
   ul {

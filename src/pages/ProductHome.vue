@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <div class="wrapper">
-      <!-- swiper -->
+      <!-- 1. swiper -->
       <div class="swiper-box">
         <swiper :options="swiperOption">
           <swiper-slide v-for="item of slideList" :key="item.id">
@@ -14,6 +14,7 @@
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
+        <!-- 左侧边菜单导航栏 -->
         <div class="nav-menu">
           <ul class="menu-wrap">
             <li class="menu-item">
@@ -42,12 +43,77 @@
           </ul>
         </div>
       </div>
-      <!-- ads广告 -->
-      <div class="ads-box">ads</div>
-      <!-- banner -->
-      <div class="banner">banner</div>
-      <!-- 产品列表 -->
-      <div class="product-box">product</div>
+      <!-- 2. ads广告 -->
+      <div class="ads-box">
+        <a
+          :href="'/#/productShow/' + item.id"
+          v-for="item of adsList"
+          :key="item.id"
+        >
+          <img :src="item.img" alt="" />
+        </a>
+      </div>
+      <!-- 3. banner -->
+      <div class="banner-box">
+        <a href="/#/productShow/70">
+          <img src="../../public/imgs/banner-1.png" alt="" />
+        </a>
+      </div>
+      <!-- 4. 产品列表 -->
+      <div class="product-box">
+        <h2 class="pro-title">手机</h2>
+        <div class="pro-content">
+          <div class="banner-left"></div>
+          <div class="list-wrap">
+            <ul class="list" v-for="item of productList" :key="item.id">
+              <li class="item">
+                <span class="item-tag">新品</span>
+                <div class="item-img">
+                  <img src="" alt="" />
+                </div>
+                <div class="item-info">
+                  <h3 class="item-title">xiaomi9</h3>
+                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
+                  <p class="item-price">2999元</p>
+                </div>
+              </li>
+              <li class="item">
+                <span class="item-tag">新品</span>
+                <div class="item-img">
+                  <img src="" alt="" />
+                </div>
+                <div class="item-info">
+                  <h3 class="item-title">xiaomi9</h3>
+                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
+                  <p class="item-price">2999元</p>
+                </div>
+              </li>
+              <li class="item">
+                <span class="item-tag">新品</span>
+                <div class="item-img">
+                  <img src="" alt="" />
+                </div>
+                <div class="item-info">
+                  <h3 class="item-title">xiaomi9</h3>
+                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
+                  <p class="item-price">2999元</p>
+                </div>
+              </li>
+              <li class="item">
+                <span class="item-tag">新品</span>
+                <div class="item-img">
+                  <img src="" alt="" />
+                </div>
+                <div class="item-info">
+                  <h3 class="item-title">xiaomi9</h3>
+                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
+                  <p class="item-price">2999元</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 底部ServiceBar -->
@@ -74,8 +140,7 @@ export default {
         loop: true,
         effect: 'cube',
         cubeEffect: {
-          slideShadows: true,
-          shadow: true,
+          shadow: false,
           shadowOffset: 100,
           shadowScale: 0.6
         },
@@ -138,6 +203,45 @@ export default {
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
+      ],
+      adsList: [
+        {
+          id: 33,
+          img: '/imgs/ads/ads-1.png'
+        },
+        {
+          id: 48,
+          img: '/imgs/ads/ads-2.jpg'
+        },
+        {
+          id: 45,
+          img: '/imgs/ads/ads-3.png'
+        },
+        {
+          id: 47,
+          img: '/imgs/ads/ads-4.jpg'
+        }
+      ],
+      productList: [
+        [
+          {
+            id: 1,
+            img: ''
+          },
+          {
+            id: 2,
+            img: ''
+          },
+          {
+            id: 3,
+            img: ''
+          },
+          {
+            id: 4,
+            img: ''
+          }
+        ],
+        []
       ]
     }
   }
@@ -148,6 +252,7 @@ export default {
 @import '@/assets/scss/config.scss';
 @import '@/assets/scss/mixin.scss';
 .home-container {
+  background-color: $colorJ;
   .swiper-box {
     position: relative;
     .swiper-container {
@@ -226,6 +331,106 @@ export default {
                     padding-left: 15px;
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .ads-box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    margin-bottom: 31px;
+    a {
+      // display: inline-block;
+      width: 296px;
+      height: 167px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .banner-box {
+    margin-bottom: 50px;
+    a {
+      display: block;
+      img {
+        height: 130px;
+      }
+    }
+  }
+  .product-box {
+    height: 690px;
+    margin-bottom: 51px;
+    .pro-title {
+      height: 71px;
+      line-height: 71px;
+      color: $colorB;
+      font-size: $fontF;
+      font-weight: bold;
+    }
+    .pro-content {
+      @include flex();
+      .banner-left {
+        width: 224px;
+        height: 619px;
+        background-color: pink;
+      }
+      .list-wrap {
+        @include flex();
+        flex-direction: column;
+        height: 619px;
+        // width: 1349px;
+        .list {
+          // @include flex(space-around);
+          display: flex;
+          width: 100%;
+          .item {
+            position: relative;
+            width: 236px;
+            height: 302px;
+            margin-left: 16px;
+            background-color: $colorG;
+            font-size: $fontJ;
+            text-align: center;
+            .item-tag {
+              display: inline-block;
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 67px;
+              height: 24px;
+              background-color: green;
+              color: $colorG;
+            }
+            .item-img {
+              width: 190px;
+              height: 190px;
+              margin: 24px 23px 0;
+              background-color: blue;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .item-info {
+              // height: 50px;
+              line-height: 20px;
+              .item-title {
+                color: $colorB;
+                font-weight: bold;
+              }
+              .item-desc {
+                color: $colorD;
+                font-size: $fontK;
+                padding: 6px 0 10px;
+              }
+              .item-price {
+                color: #f20a0a;
               }
             }
           }
