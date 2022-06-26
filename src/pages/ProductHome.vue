@@ -20,7 +20,7 @@
             <li class="menu-item">
               手机 电话卡
               <div class="children">
-                <ul v-for="(item, index) of menuList" :key="index">
+                <ul v-for="(item, index) of menuList" :key="+index">
                   <li v-for="subItem of item" :key="subItem.id">
                     <a :href="'/#/productShow/' + subItem.id">
                       <img
@@ -59,62 +59,52 @@
           <img src="../../public/imgs/banner-1.png" alt="" />
         </a>
       </div>
-      <!-- 4. 产品列表 -->
-      <div class="product-box">
+    </div>
+    <!-- 4. 产品列表 -->
+    <div class="product-box">
+      <div class="wrapper">
         <h2 class="pro-title">手机</h2>
         <div class="pro-content">
-          <div class="banner-left"></div>
+          <div class="banner-left">
+            <a href=""> <img src="../../public/imgs/mix-alpha.jpg" alt="" /></a>
+          </div>
           <div class="list-wrap">
-            <ul class="list" v-for="item of productList" :key="item.id">
-              <li class="item">
-                <span class="item-tag">新品</span>
+            <div class="list" v-for="(item, i) of productList" :key="i">
+              <div class="item" v-for="(subItem, j) of item" :key="j">
+                <span :class="{ 'item-tag': true, 'item-tagm': j % 2 == 0 }">
+                  {{ j % 2 == 0 ? '新品' : '秒杀' }}
+                </span>
                 <div class="item-img">
-                  <img src="" alt="" />
+                  <img :src="subItem.mainImage" alt="" />
                 </div>
                 <div class="item-info">
-                  <h3 class="item-title">xiaomi9</h3>
-                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
-                  <p class="item-price">2999元</p>
+                  <h3 class="item-title">{{ subItem.name }}</h3>
+                  <p class="item-desc">{{ subItem.subtitle }}</p>
+                  <p class="item-price" @click="addCart(subItem.id)">
+                    {{ subItem.price }}元
+                  </p>
                 </div>
-              </li>
-              <li class="item">
-                <span class="item-tag">新品</span>
-                <div class="item-img">
-                  <img src="" alt="" />
-                </div>
-                <div class="item-info">
-                  <h3 class="item-title">xiaomi9</h3>
-                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
-                  <p class="item-price">2999元</p>
-                </div>
-              </li>
-              <li class="item">
-                <span class="item-tag">新品</span>
-                <div class="item-img">
-                  <img src="" alt="" />
-                </div>
-                <div class="item-info">
-                  <h3 class="item-title">xiaomi9</h3>
-                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
-                  <p class="item-price">2999元</p>
-                </div>
-              </li>
-              <li class="item">
-                <span class="item-tag">新品</span>
-                <div class="item-img">
-                  <img src="" alt="" />
-                </div>
-                <div class="item-info">
-                  <h3 class="item-title">xiaomi9</h3>
-                  <p class="item-desc">骁龙855，索尼4800万超广角微距</p>
-                  <p class="item-price">2999元</p>
-                </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 添加购物车对话框 -->
+    <ModalBox
+      modalTitle="提示"
+      sureText="查看购物车"
+      btnType="1"
+      modalType="middle"
+      :showModal="showModal"
+      @confirm="goToCart"
+      @cancel="closeModal"
+    >
+      <template v-slot:dialogBody>
+        <p>商品添加成功！</p>
+      </template>
+    </ModalBox>
 
     <!-- 底部ServiceBar -->
     <ServiceBar></ServiceBar>
@@ -123,6 +113,7 @@
 
 <script>
 import ServiceBar from '@/components/ServiceBar.vue'
+import ModalBox from '@/components/ModalBox.vue'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
@@ -131,7 +122,8 @@ export default {
   components: {
     ServiceBar,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    ModalBox
   },
   data() {
     return {
@@ -222,28 +214,47 @@ export default {
           img: '/imgs/ads/ads-4.jpg'
         }
       ],
-      productList: [
-        [
-          {
-            id: 1,
-            img: ''
-          },
-          {
-            id: 2,
-            img: ''
-          },
-          {
-            id: 3,
-            img: ''
-          },
-          {
-            id: 4,
-            img: ''
-          }
-        ],
-        []
-      ]
+      productList: [],
+      showModal: false
     }
+  },
+  methods: {
+    async getProductList() {
+      const res = await this.$http.get('/products', {
+        params: {
+          categoryId: 100012,
+          pageSize: 14
+        }
+      })
+      res.list = res.list.slice(6, 14)
+      this.productList = [res.list.slice(0, 4), res.list.slice(4, 8)]
+      // console.log(this.productList)
+    },
+
+    addCart() {
+      this.showModal = true
+      return
+      // this.$http
+      //   .get('/carts', {
+      //     params: {
+      //       productId: id,
+      //       selected: true
+      //     }
+      //   })
+      //   .then(() => {})
+      //   .catch(() => {
+      //     this.showModal = true
+      //   })
+    },
+    goToCart() {
+      this.$router.push('/productCart')
+    },
+    closeModal() {
+      this.showModal = false
+    }
+  },
+  mounted() {
+    this.getProductList()
   }
 }
 </script>
@@ -252,7 +263,7 @@ export default {
 @import '@/assets/scss/config.scss';
 @import '@/assets/scss/mixin.scss';
 .home-container {
-  background-color: $colorJ;
+  // background-color: $colorJ;
   .swiper-box {
     position: relative;
     .swiper-container {
@@ -364,73 +375,96 @@ export default {
   }
   .product-box {
     height: 690px;
-    margin-bottom: 51px;
-    .pro-title {
-      height: 71px;
-      line-height: 71px;
-      color: $colorB;
-      font-size: $fontF;
-      font-weight: bold;
-    }
-    .pro-content {
-      @include flex();
-      .banner-left {
-        width: 224px;
-        height: 619px;
-        background-color: pink;
+    background-color: $colorJ;
+    padding-bottom: 51px;
+    .wrapper {
+      .pro-title {
+        height: 71px;
+        line-height: 71px;
+        color: $colorB;
+        font-size: $fontF;
+        font-weight: bold;
       }
-      .list-wrap {
+      .pro-content {
         @include flex();
-        flex-direction: column;
-        height: 619px;
-        // width: 1349px;
-        .list {
-          // @include flex(space-around);
-          display: flex;
-          width: 100%;
-          .item {
-            position: relative;
-            width: 236px;
-            height: 302px;
-            margin-left: 16px;
-            background-color: $colorG;
-            font-size: $fontJ;
-            text-align: center;
-            .item-tag {
-              display: inline-block;
-              position: absolute;
-              top: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 67px;
-              height: 24px;
-              background-color: green;
-              color: $colorG;
+        .banner-left {
+          a {
+            display: inline-block;
+            width: 224px;
+            height: 619px;
+            img {
+              width: 100%;
+              height: 100%;
             }
-            .item-img {
-              width: 190px;
-              height: 190px;
-              margin: 24px 23px 0;
-              background-color: blue;
-              img {
-                width: 100%;
-                height: 100%;
+          }
+        }
+        .list-wrap {
+          @include flex();
+          flex-direction: column;
+          height: 619px;
+          // width: 1349px;
+          .list {
+            // @include flex(space-around);
+            display: flex;
+            width: 100%;
+            .item {
+              position: relative;
+              width: 236px;
+              height: 302px;
+              margin-left: 16px;
+              background-color: $colorG;
+              font-size: $fontJ;
+              text-align: center;
+              .item-tag {
+                display: inline-block;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 67px;
+                height: 24px;
+                background-color: green;
+                color: $colorG;
               }
-            }
-            .item-info {
-              // height: 50px;
-              line-height: 20px;
-              .item-title {
-                color: $colorB;
-                font-weight: bold;
+              .item-tagm {
+                background-color: #e82626;
               }
-              .item-desc {
-                color: $colorD;
-                font-size: $fontK;
-                padding: 6px 0 10px;
+              .item-img {
+                width: 190px;
+                height: 190px;
+                margin: 24px 23px 5px;
+                img {
+                  width: 160px;
+                  height: 160px;
+                  margin: 15px;
+                }
               }
-              .item-price {
-                color: #f20a0a;
+              .item-info {
+                // height: 50px;
+                line-height: 20px;
+                .item-title {
+                  color: $colorB;
+                  font-weight: bold;
+                }
+                .item-desc {
+                  color: $colorD;
+                  font-size: $fontK;
+                  padding: 6px 0 10px;
+                }
+                .item-price {
+                  color: #f20a0a;
+                  cursor: pointer;
+                  &::after {
+                    content: '';
+                    @include bgImg(
+                      18px,
+                      18px,
+                      '/public/imgs/icon-cart-hover.png'
+                    );
+                    margin-left: 6px;
+                    vertical-align: middle;
+                  }
+                }
               }
             }
           }

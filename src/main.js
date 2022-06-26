@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import router from '@/router'
 import axios from 'axios'
+import VueLazyLoad from 'vue-lazyload'
 import App from './App.vue'
 // import '@/assets/scss/config.scss'
-import '@/assets/scss/reset.scss'
-import '@/assets/scss/base.scss'
+// import '@/assets/scss/reset.scss'
+// import '@/assets/scss/base.scss'
 
 // 根据环境变量获取不同的请求根路径
 // import env from '@/env'
@@ -29,6 +30,10 @@ axios.interceptors.response.use((response) => {
   }
 })
 Vue.prototype.$http = axios
+
+Vue.use(VueLazyLoad, {
+  loading: '../public/imgs/loading-svg/loading-balls.svg'
+})
 
 // mock开关
 const mock = false
