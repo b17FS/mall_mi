@@ -29,3 +29,20 @@
   background:  url($img) no-repeat
     center/$size;
 }
+
+@mixin slide($topHidden:0) {
+  &.slide-enter{
+    top: $topHidden;
+    opacity: 0;
+  }
+  &.slide-enter-active {
+    transition: all .5s;
+  }
+  &.slide-leave-active {
+    transition: all .5s;
+  }
+  &.slide-leave-to{
+    top:$topHidden;
+    opacity: 0;
+  }
+}

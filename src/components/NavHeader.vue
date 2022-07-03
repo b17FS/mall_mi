@@ -14,7 +14,7 @@
           <a href="javascript:;" v-if="username"> {{ username }} </a>
           <a href="javascript:;">我的订单</a>
           <a href="javascript:;" class="my-cart" @click="goTOCart"
-            ><span class="icon-cart"></span> 购物车</a
+            ><span class="icon-cart"></span> 购物车 ({{ cartCount }})</a
           >
         </div>
       </div>
@@ -122,13 +122,25 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'NavHeader',
   data() {
     return {
-      username: '',
+      // username: '',
       phoneList: []
     }
+  },
+  computed: {
+    // 因为调用用户接口获取数据需要时间，而每次刷新页面时，用户数据渲染时，用户数据还没有请求到(接口请求延迟，比组件德渲染要慢)
+    // 所以，使用 computed 计算属性，对数据进行缓存，（只有在数据变更后，再回重新计算）
+    // username() {
+    //   return this.$store.state.username
+    // },
+    // cartCount() {
+    //   return this.$store.state.cartCount
+    // }
+    ...mapState(['username', 'cartCount'])
   },
   methods: {
     // 1. 获取菜单导航 小米手机数据
@@ -137,8 +149,8 @@ export default {
         params: { categoryId: '100012', pageSize: 6 }
       })
       this.phoneList = res.list
-      console.log(res)
-      console.log(this.phoneList)
+      // console.log(res)
+      // console.log(this.phoneList)
     },
 
     // 2. 点击购物车跳转页面

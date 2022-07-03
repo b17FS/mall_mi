@@ -1,6 +1,7 @@
 <template>
-  <div class="modal-container" v-show="showModal">
-    <div class="mask">
+  <transition name="slide">
+    <div class="modal-container" v-show="showModal">
+      <div class="mask"></div>
       <div class="dialog">
         <!-- 对话框头部 -->
         <div class="modal-header">
@@ -51,7 +52,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -83,8 +84,7 @@ export default {
     showModal: {
       type: Boolean
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

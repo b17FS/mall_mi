@@ -2,6 +2,8 @@
 .modal-container{
   @include position(fixed);
   z-index: 50; 
+  opacity: 1;
+  @include slide(-100%);
   .mask{
     @include position(fixed);
     background-color: rgba(0, 0, 0, .5);
@@ -10,6 +12,7 @@
     @include position(absolute,40%,50%,660px,auto);
     transform: translate(-50%,-50%);
     background-color: $colorG;
+   
     .modal-header{
       height: 60px;
       line-height: 60px;

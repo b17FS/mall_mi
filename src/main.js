@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import router from '@/router'
 import axios from 'axios'
+import VueCookie from 'vue-cookie'
 import VueLazyLoad from 'vue-lazyload'
+import store from '@/store'
 import App from './App.vue'
 // import '@/assets/scss/config.scss'
 // import '@/assets/scss/reset.scss'
@@ -21,12 +23,16 @@ axios.defaults.timeout = 8000
 // response 拦截器：处理接口请求错误拦截
 axios.interceptors.response.use((response) => {
   let res = response.data
+  let path = location.hash
   if (res.status == 0) {
     return res.data
   } else if (res.status == 10) {
-    window.location.href = '/#/usersLogin'
+    if (path != '#/productHome') {
+      window.location.href = '/#/usersLogin'
+    }
   } else {
     alert(res.msg)
+    return Promise.reject(res)
   }
 })
 Vue.prototype.$http = axios
@@ -34,6 +40,8 @@ Vue.prototype.$http = axios
 Vue.use(VueLazyLoad, {
   loading: '../public/imgs/loading-svg/loading-balls.svg'
 })
+
+Vue.use(VueCookie)
 
 // mock开关
 const mock = false
@@ -45,5 +53,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: (h) => h(App),
-  router
+  router,
+  store
 }).$mount('#app')
