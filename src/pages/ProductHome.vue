@@ -231,24 +231,27 @@ export default {
       // console.log(this.productList)
     },
 
-    addCart() {
-      this.showModal = true
-      return
-      // this.$http
-      //   .get('/carts', {
-      //     params: {
-      //       productId: id,
-      //       selected: true
-      //     }
-      //   })
-      //   .then(() => {})
-      //   .catch(() => {
-      //     this.showModal = true
-      //   })
+    addCart(id) {
+      // this.showModal = true
+
+      this.$http
+        .post('/carts', {
+          productId: id,
+          selected: true
+        })
+        .then((res) => {
+          this.showModal = true
+          this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
+        })
+        .catch(() => {
+          this.showModal = true
+        })
     },
+
     goToCart() {
       this.$router.push('/productCart')
     },
+
     closeModal() {
       this.showModal = false
     }
