@@ -12,6 +12,9 @@
         <div class="topbar-user">
           <a href="javascript:;" v-if="!username" @click="goLogin">登录</a>
           <a href="javascript:;" v-if="username"> {{ username }} </a>
+          <a href="javascript:;" v-if="username" @click="loginOut">退出</a>
+          <!-- <a href="javascript:;" v-if="!username" @click="goLogin">登录</a> -->
+
           <a href="javascript:;">我的订单</a>
           <a href="javascript:;" class="my-cart" @click="goTOCart"
             ><span class="icon-cart"></span> 购物车 ({{ cartCount }})</a
@@ -122,7 +125,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'NavHeader',
   data() {
@@ -149,7 +152,7 @@ export default {
         params: { categoryId: '100012', pageSize: 6 }
       })
       this.phoneList = res.list
-      // console.log(res)
+      console.log(this)
       // console.log(this.phoneList)
     },
 
@@ -161,6 +164,28 @@ export default {
     // 3. 点击登录跳转页面
     goLogin() {
       this.$router.push('/usersLogin')
+    },
+
+    // 4.退出登录
+    loginOut() {
+      this.$http.post('/user/logout').then(() => {
+        this.$message.success('退出成功！')
+        this.$cookie.set('userId', '', { expires: '-1' })
+        this.saveUserName('')
+        this.saveCartCount(0)
+        this.$router.push('/usersLogin')
+      })
+    },
+
+    ...mapActions(['saveUserName', 'saveCartCount']),
+
+    getCartCount() {
+      this.$http.get('/carts/products/sum').then((res = 0) => {
+        // to-do 保存到 vuex 里面
+        // this.$store.dispatch('saveCartCount', res)
+        this.saveCartCount(res)
+        // console.log(res)
+      })
     }
   },
   filters: {
@@ -171,6 +196,10 @@ export default {
   },
   mounted() {
     this.getProductList()
+    let params = this.$route.params
+    if (params && params.from === 'login') {
+      this.getCartCount()
+    }
   }
 }
 </script>

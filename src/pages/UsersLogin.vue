@@ -75,21 +75,27 @@ export default {
         .then((res) => {
           // console.log(res)
           // 将 userId 以 Cookie形式 保存
-          this.$cookie.set('userId', res.id, { expires: '1M' })
+          this.$cookie.set('userId', res.id, { expires: 'Session' })
           // ToTo：保存用户名
           this.$store.dispatch('saveUserName', res.username)
-          this.$router.push('/productHome')
+          this.$router.push({
+            name: 'ProductHome',
+            params: {
+              from: 'login'
+            }
+          })
         })
     },
     register() {
       this.$http
         .post('/user/register', {
-          username: '小白',
-          password: '123',
+          username: '一一',
+          password: '000',
           email: 'xiaobai@qq.com'
         })
         .then(() => {
-          alert('注册成功！')
+          this.$message.success('注册成功！')
+          // this.$message.error('注册成功！')
         })
     }
   }
@@ -198,6 +204,7 @@ export default {
           margin-top: 15px;
           @include flex();
           font-size: $fontJ;
+          cursor: pointer;
           .sms {
             color: $colorA;
           }

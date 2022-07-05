@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.9",
     "swiper": "^5.3.6",
     "vue": "^2.6.14",
     "vue-awesome-swiper": "^4.0.4",
@@ -23,7 +24,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "element-ui": "^2.15.9",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "mockjs": "^1.1.0",

@@ -5,6 +5,8 @@ import VueCookie from 'vue-cookie'
 import VueLazyLoad from 'vue-lazyload'
 import store from '@/store'
 import App from './App.vue'
+import '@/element/element'
+
 // import '@/assets/scss/config.scss'
 // import '@/assets/scss/reset.scss'
 // import '@/assets/scss/base.scss'

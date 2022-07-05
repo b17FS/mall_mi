@@ -148,10 +148,10 @@ export default {
       let quantity = item.quantity
       let selected = item.productSelected
       if (type === '-') {
-        quantity <= 1 ? alert('至少保留一件商品') : --quantity
+        quantity <= 1 ? this.$message.warning('至少保留一件商品') : --quantity
       } else if (type === '+') {
         quantity > item.productStock
-          ? alert('购买数量不能超过库存数量')
+          ? this.$message.warning('购买数量不能超过库存数量')
           : ++quantity
       } else {
         selected = !item.productSelected
@@ -172,6 +172,7 @@ export default {
       this.delProductId = id
     },
     deleteCart() {
+      this.$message.success('删除成功！')
       this.showModal = false
       this.$http.delete(`carts/${this.delProductId}`).then((res) => {
         this.renderData(res)
