@@ -29,7 +29,7 @@ axios.interceptors.response.use((response) => {
   } else if (res.status == 10) {
     // status == 10 表示未登录状态
     // 未登录状态下，如果正处在 非首页,则需要跳转到登录页面进行登录
-    // 可以使用vue 的前置路由导航 实现页面跳转限制
+    // 类似使用vue 的前置路由导航 实现页面跳转限制
     if (path != '#/productHome') {
       window.location.href = '/#/usersLogin'
       return Promise.reject(res)

@@ -172,7 +172,8 @@ export default {
         transform: translateX(-50%);
         @include flex();
         flex-direction: column;
-        width: 600px;
+        // width: 600px;
+        width: 80%;
         color: $colorB;
 
         .title {
