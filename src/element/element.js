@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import { Message } from 'element-ui'
+import { Message, Icon } from 'element-ui'
 
-// Vue.use()
+Vue.use(Icon)
 
 Vue.prototype.$message = Message
