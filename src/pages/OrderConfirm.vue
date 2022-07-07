@@ -1,5 +1,12 @@
 <template>
   <div class="confirm-container">
+    <!-- order-header组件 -->
+    <OrderHeader title="确认订单">
+      <template #tip>
+        <span>温馨提示：请填写准确的收货地址，仔细确认订单后，再提交</span>
+      </template>
+    </OrderHeader>
+
     <div class="order-box wrapper">
       <!-- 地址 -->
       <div class="address">
@@ -163,11 +170,13 @@
 
 <script>
 import ModalBox from '@/components/ModalBox.vue'
+import OrderHeader from '@/components/OrderHeader.vue'
 
 export default {
   name: 'ProductConfirm',
   components: {
-    ModalBox
+    ModalBox,
+    OrderHeader
   },
   data() {
     return {
@@ -327,9 +336,9 @@ export default {
 @import '@/assets/scss/mixin.scss';
 
 .confirm-container {
-  background-color: $colorH;
-  overflow: hidden;
-  padding: 30px 0 200px;
+  background-color: $colorJ;
+  padding: 0 0 130px;
+
   .order-box {
     background-color: $colorG;
     padding-left: 60px;

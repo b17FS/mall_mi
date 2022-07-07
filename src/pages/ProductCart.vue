@@ -197,7 +197,7 @@ export default {
       // 当没有商品被选中时，提示：请至少选择一件商品！
       let unCheck = this.cartList.every((item) => !item.productSelected)
       if (unCheck) {
-        alert('请至少选择一件商品！')
+        this.$message.warning('请至少选择一件商品！')
       } else {
         this.$router.push('/orderCommon/orderConfirm')
       }

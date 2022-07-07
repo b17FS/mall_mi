@@ -1,5 +1,11 @@
 <template>
   <div class="pay-container">
+    <!-- order-header组件 -->
+    <order-header title="支付订单">
+      <template #tip>
+        <span> 温馨提示：请谨防钓鱼链接或诈骗电话，了解更多> </span>
+      </template>
+    </order-header>
     <div class="wrapper">
       <!-- 订单 -->
       <div class="pay-box">
@@ -102,12 +108,14 @@
 import QRCode from 'qrcode'
 import ScanPayCode from '@/components/ScanPayCode.vue'
 import ModalBox from '@/components/ModalBox.vue'
+import OrderHeader from '@/components/OrderHeader.vue'
 
 export default {
   name: 'ProductPay',
   components: {
     ScanPayCode,
-    ModalBox
+    ModalBox,
+    OrderHeader
   },
   data() {
     return {
@@ -204,9 +212,9 @@ export default {
 @import '@/assets/scss/mixin.scss';
 
 .pay-container {
-  background-color: $colorH;
-  overflow: hidden;
-  padding: 30px 0 130px;
+  background-color: $colorJ;
+  padding: 0 0 130px;
+
   .wrapper {
     .pay-box {
       font-size: $fontJ;

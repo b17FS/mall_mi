@@ -38,6 +38,8 @@ export default {
 .orderHeader-container {
   height: 112px;
   padding: 30px 0;
+  background-color: #fff;
+  margin-bottom: 30px;
   border-bottom: 2px solid $colorA;
   box-sizing: border-box;
   .title {
