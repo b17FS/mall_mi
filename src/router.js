@@ -59,6 +59,11 @@ export default new Router({
           path: 'orderPay',
           name: 'OrderPay',
           component: OrderPay
+        },
+        {
+          path: '/aliPay',
+          name: 'AliPay',
+          component: AliPay
         }
       ]
     },
@@ -71,11 +76,6 @@ export default new Router({
       path: '/usersLogin',
       name: 'UsersLogin',
       component: UsersLogin
-    },
-    {
-      path: '/aliPay',
-      name: 'AliPay',
-      component: AliPay
     }
   ]
 })
